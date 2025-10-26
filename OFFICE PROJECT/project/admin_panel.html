@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel - SLP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+    h2 {
+      color: #00bfff;
+      margin-bottom: 20px;
+    }
+    .card {
+      background-color: #1e1e1e;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .card-body input, .card-body select {
+      background-color: #2a2a2a;
+      color: white;
+      border: none;
+    }
+    .card-body input:focus, .card-body select:focus {
+      outline: 2px solid #00bfff;
+    }
+    .btn-update {
+      background-color: #00bfff;
+      border: none;
+    }
+    .btn-update:hover {
+      background-color: #0086c3;
+    }
+    .updated-date {
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🛠️ Admin Panel – Manage Stock</h2>
+<div class="row" id="stockCards"></div>
+
+<script>
+  let hangers = [
+    { name: 'Garber', stock: 1200, status: 'Available' },
+    { name: 'Walmart', stock: 180, status: 'Few Left' },
+    { name: 'BK54', stock: 0, status: 'Out of Stock' },
+    { name: '10\" TOP', stock: 650, status: 'Available' },
+    { name: '12\" TOP', stock: 400, status: 'Available' },
+    { name: 'WT 10\"', stock: 150, status: 'Few Left' },
+    { name: 'WT 12\"', stock: 850, status: 'Available' },
+    { name: '5400-', stock: 700, status: 'Available' },
+    { name: 'GB 561', stock: 0, status: 'Out of Stock' }
+  ];
+
+  // Load saved stock from localStorage if available
+  const saved = localStorage.getItem('hangerStock');
+  if (saved) hangers = JSON.parse(saved);
+
+  const container = document.getElementById("stockCards");
+
+  function renderCards() {
+    container.innerHTML = "";
+    hangers.forEach((hanger, index) => {
+      container.innerHTML += `
+        <div class="col-md-4">
+          <div class="card p-3">
+            <div class="card-body">
+              <h5>${hanger.name}</h5>
+              <label>Stock:</label>
+              <input type="number" class="form-control mb-2" id="stock-${index}" value="${hanger.stock}">
+              <label>Status:</label>
+              <select class="form-select mb-2" id="status-${index}">
+                <option ${hanger.status === 'Available' ? 'selected' : ''}>Available</option>
+                <option ${hanger.status === 'Few Left' ? 'selected' : ''}>Few Left</option>
+                <option ${hanger.status === 'Out of Stock' ? 'selected' : ''}>Out of Stock</option>
+              </select>
+              <div class="updated-date" id="date-${index}">Last Updated: -</div>
+              <button class="btn btn-update w-100 mt-3" onclick="updateCard(${index})">Update</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function updateCard(index) {
+    const stockInput = document.getElementById(`stock-${index}`);
+    const statusSelect = document.getElementById(`status-${index}`);
+    const dateLabel = document.getElementById(`date-${index}`);
+
+    hangers[index].stock = parseInt(stockInput.value);
+    hangers[index].status = statusSelect.value;
+
+    const now = new Date().toLocaleString('en-IN');
+    dateLabel.innerText = `Last Updated: ${now}`;
+
+    // Save updated stock to localStorage
+    localStorage.setItem('hangerStock', JSON.stringify(hangers));
+
+    alert(`✅ ${hangers[index].name} updated!`);
+  }
+
+  renderCards();
+</script>
+
+</body>
+</html>

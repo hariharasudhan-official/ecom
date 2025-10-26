@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile - Sri Laxmi Plastics</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .profile-sidebar {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .menu-item {
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+    .menu-item:hover {
+      background-color: #2a2a2a;
+      color: #1e90ff;
+    }
+    .menu-item i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    .hanger-gallery img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .hanger-gallery img:hover {
+      transform: scale(1.05);
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .profile-header img {
+      width: 60px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+    .modal-content {
+      background-color: #1e1e1e;
+      color: white;
+      border: none;
+    }
+    .form-control {
+      background-color: #2a2a2a;
+      color: white;
+      border: none;
+    }
+    .form-control:focus {
+      border: 1px solid #00bfff;
+      box-shadow: none;
+    }
+    .btn-login {
+      background-color: #00bfff;
+      border: none;
+    }
+    .btn-login:hover {
+      background-color: #0086c3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    
+    <!-- Sidebar -->
+    <div class="col-md-3 profile-sidebar">
+      <div class="profile-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User">
+        <div>
+          <h5 class="mb-0">Hello, User</h5>
+          <small class="text-muted">Welcome back</small>
+        </div>
+      </div>
+
+      <a href="#" onclick="googleSignIn()" class="menu-item">
+        <i class="bi bi-google"></i>
+        <span>Sign in with Google</span>
+      </a>
+
+      <a href="order.html" class="menu-item">
+        <i class="bi bi-bag-check"></i>
+        <span>My Orders</span>
+      </a>
+
+      <a href="stock.html" class="menu-item">
+        <i class="bi bi-box-seam"></i>
+        <span>Stock</span>
+      </a>
+
+      <a href="settings.html" class="menu-item">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+      </a>
+
+      <a href="#" class="menu-item" onclick="showAdminLogin()">
+        <i class="bi bi-person-lock"></i>
+        <span>Admin Login</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 p-4">
+      <h3 class="mb-4">📌 Hanger Sample Gallery</h3>
+      <div class="row hanger-gallery">
+        <div class="col-md-4"><img src="image/cl4.jpg" alt="Hanger 1"></div>
+        <div class="col-md-4"><img src="image/pink.jpg" alt="Hanger 2"></div>
+        <div class="col-md-4"><img src="image/cloths hanger.jpg" alt="Hanger 3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div class="modal fade" id="adminModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h5 class="modal-title">Admin Access</h5>
+      <input type="password" class="form-control mt-3" id="adminPassword" placeholder="Enter Admin Password">
+      <div class="text-danger mt-2" id="errorMsg" style="display:none;">❌ Incorrect Password</div>
+      <button class="btn btn-login mt-3 w-100" onclick="loginAdmin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  function googleSignIn() {
+    alert("Google Sign-In feature coming soon...");
+  }
+
+  function showAdminLogin() {
+    const modal = new bootstrap.Modal(document.getElementById('adminModal'));
+    document.getElementById("adminPassword").value = "";
+    document.getElementById("errorMsg").style.display = "none";
+    modal.show();
+  }
+
+  function loginAdmin() {
+    const pass = document.getElementById("adminPassword").value.trim();
+    if (pass === "admin123") {
+      window.location.href = "admin_panel.html";
+    } else {
+      document.getElementById("errorMsg").style.display = "block";
+    }
+  }
+</script>
+
+</body>
+</html>
